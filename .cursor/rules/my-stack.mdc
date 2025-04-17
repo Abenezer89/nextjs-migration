@@ -1,0 +1,23 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# technical stack
+
+– Vite – Fast builds & development.
+– TypeScript – Type safety & maintainability.
+– React.js – Interactive, component-based UI.
+– ShadCN-UI – Elegant, pre-built UI components.
+– Tailwind CSS – Utility-first styling.
+– Icons: Lucide Icons for UI elements.
+– Backend: Supabase – Handles database, authentication, and storage.
+– Database: PostgreSQL for relational data.
+– Search Engine: Supabase Full-Text Search** – Fast job search without
+Elasticsearch.
+– File Storage: Supabase Storage – Store CVs, company logos, etc
