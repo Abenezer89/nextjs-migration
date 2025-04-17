@@ -19,23 +19,23 @@ interface JobCardProps {
 
 const JobCard: React.FC<JobCardProps> = ({ job, compact = false }) => {
   return (
-    <Card className={`job-card ${compact ? 'p-0' : ''} border-transparent hover:border-job-primary/30 overflow-hidden group`}>
+    <Card className={`bg-white rounded-lg shadow-sm border border-gray-200 hover:border-job-primary/30 overflow-hidden group transition-all duration-300 hover:shadow-md ${compact ? 'p-0' : 'p-6'}`}>
       <div className="flex justify-between items-start">
-        <CardHeader className={compact ? 'p-4 pb-2' : 'px-0 pt-0'}>
-          <div className="flex items-center gap-2 mb-1">
+        <CardHeader className={compact ? 'p-4 pb-2' : 'p-0 space-y-3'}>
+          <div className="flex items-center gap-2">
             <Badge variant={job.remote ? "outline" : "secondary"} className={`${job.remote ? 'border-blue-300 bg-blue-50 text-job-primary' : ''} rounded-full text-xs animate-fade-in`}>
               {job.remote ? 'Remote' : job.location}
             </Badge>
             <span className="text-job-muted text-sm">{job.postedDate}</span>
           </div>
           
-          <CardTitle className="text-xl font-semibold text-left hover:text-job-primary transition-colors">
+          <CardTitle className="text-xl font-semibold text-left text-job-text hover:text-job-primary transition-colors">
             <Link href={`/job/${job.id}`} className="block">
               {job.title}
             </Link>
           </CardTitle>
           
-          <div className="text-job-muted mt-1 text-left">{job.company}</div>
+          <div className="text-job-muted text-left">{job.company}</div>
         </CardHeader>
         
         <Button variant="ghost" className="rounded-full p-2 h-9 w-9 mt-3 mr-3">
@@ -44,7 +44,7 @@ const JobCard: React.FC<JobCardProps> = ({ job, compact = false }) => {
       </div>
       
       {!compact && (
-        <CardContent className="px-0 text-left">
+        <CardContent className="p-0 text-left mt-4">
           <div className="mt-2">
             <div className="text-job-text mb-3">{job.description.substring(0, 150)}...</div>
             
@@ -60,7 +60,7 @@ const JobCard: React.FC<JobCardProps> = ({ job, compact = false }) => {
       )}
       
       {!compact && (
-        <CardFooter className="px-0 pt-4 gap-3 flex justify-between items-center">
+        <CardFooter className="p-0 pt-4 gap-3 flex justify-between items-center">
           <Badge variant="outline" className="rounded-full border-gray-300">
             {job.jobType}
           </Badge>

@@ -3,12 +3,13 @@
 import '@/app/globals.css'; 
 import type { Metadata } from "next";
 import { Inter } from "next/font/google"; // Default Next.js font, adjust if needed
-import { ThemeProvider } from "next-themes";
+import { ThemeProvider } from '@/components/ThemeProvider'
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react"; // Import React for QueryClient state
+import Navbar from "@/components/Navbar";
 
 // Assuming Inter is the desired font, adjust if your project used a different one.
 const inter = Inter({ subsets: ["latin"] });
@@ -24,9 +25,9 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
   // Initialize QueryClient here within the client component part
   const [queryClient] = React.useState(() => new QueryClient());
 
@@ -37,15 +38,10 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <QueryClientProvider client={queryClient}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
+          <ThemeProvider>
             <TooltipProvider>
-            <React.Fragment key="layout-children">{children as React.ReactElement}</React.Fragment>
-              
+              <Navbar />
+              {children}
               <Toaster />
               <Sonner />
             </TooltipProvider>

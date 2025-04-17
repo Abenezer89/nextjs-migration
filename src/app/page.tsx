@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { jobs } from '@/data/jobs'; // Assuming this path is correct after copy
 import { JobFilter } from '@/types'; // Assuming this path is correct
-import Navbar from '@/components/Navbar';
 import SearchBar from '@/components/SearchBar';
 import JobCard from '@/components/JobCard';
 import FeaturedJobs from '@/components/FeaturedJobs';
@@ -113,8 +112,6 @@ export default function HomePage() { // Changed name for clarity
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
-
       <main className="flex-grow">
         {/* Hero Section */}
         <div className="bg-gradient-to-b from-blue-50 to-white py-12">

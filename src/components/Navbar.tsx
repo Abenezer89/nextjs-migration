@@ -47,6 +47,7 @@ const Navbar: React.FC<NavbarProps> = ({
   const [isEmployer, setIsEmployer] = React.useState(initialIsEmployer);
 
   const isActive = (path: string) => {
+    if (!pathname) return false;
     if (path === "/") {
       return pathname === path;
     }
@@ -59,13 +60,13 @@ const Navbar: React.FC<NavbarProps> = ({
   ];
 
   const jobSeekerNavItems = [
-    { path: "/job-alerts", label: "Job Alerts", icon: Bell },
+    { label: "Job Alerts", href: "/job-alerts", icon: Bell },
   ];
 
   const employerNavItems = [
-    { path: "/employer/jobs", label: "My Jobs", icon: Briefcase },
-    { path: "/employer/candidates", label: "Candidates", icon: UserCircle },
-    { path: "/employer/analytics", label: "Analytics", icon: Bell },
+    { label: "My Jobs", href: "/employer/jobs", icon: Briefcase },
+    { label: "Candidates", href: "/employer/candidates", icon: UserCircle },
+    { label: "Analytics", href: "/employer/analytics", icon: Bell },
   ];
 
   const renderNavItems = (items: typeof publicNavItems) => (
@@ -79,7 +80,7 @@ const Navbar: React.FC<NavbarProps> = ({
             className={`flex items-center space-x-1 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
               isActive(item.href)
                 ? "bg-job-primary/10 text-job-primary"
-                : "text-gray-700 hover:bg-gray-100"
+                : "text-job-text hover:bg-gray-100"
             }`}
           >
             <Icon size={16} />
@@ -111,7 +112,7 @@ const Navbar: React.FC<NavbarProps> = ({
                 className={`flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                   isActive(item.href)
                     ? "bg-job-primary/10 text-job-primary"
-                    : "text-gray-700 hover:bg-gray-100"
+                    : "text-job-text hover:bg-gray-100"
                 }`}
               >
                 <Icon size={16} />
@@ -143,7 +144,7 @@ const Navbar: React.FC<NavbarProps> = ({
             {!isLoggedIn ? (
               <>
                 <Link href="/login">
-                  <Button variant="ghost" className="text-gray-700">
+                  <Button variant="ghost" className="text-job-text">
                     Sign In
                   </Button>
                 </Link>
@@ -192,7 +193,7 @@ const Navbar: React.FC<NavbarProps> = ({
                       </DropdownMenuItem>
                     </DropdownMenuGroup>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => setIsLoggedIn(false)}>
+                    <DropdownMenuItem>
                       <LogOut className="mr-2 h-4 w-4" />
                       <span>Log out</span>
                     </DropdownMenuItem>
