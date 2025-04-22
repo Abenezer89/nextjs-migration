@@ -11,6 +11,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react"; // Import React for QueryClient state
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { AuthProvider } from "@/context/AuthContext";
 
 // Assuming Inter is the desired font, adjust if your project used a different one.
 const inter = Inter({ subsets: ["latin"] });
@@ -41,15 +42,17 @@ export default function RootLayout({
         <QueryClientProvider client={queryClient}>
           <ThemeProvider>
             <TooltipProvider>
-              <div className="flex flex-col min-h-screen">
-                <Navbar />
-                <div className="flex-1 flex flex-col">
-                  {children}
+              <AuthProvider>
+                <div className="flex flex-col min-h-screen">
+                  <Navbar />
+                  <div className="flex-1 flex flex-col">
+                    {children}
+                  </div>
+                  <Footer />
                 </div>
-                <Footer />
-              </div>
-              <Toaster />
-              <Sonner />
+                <Toaster />
+                <Sonner />
+              </AuthProvider>
             </TooltipProvider>
           </ThemeProvider>
         </QueryClientProvider>

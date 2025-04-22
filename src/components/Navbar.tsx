@@ -148,7 +148,7 @@ const Navbar: React.FC<NavbarProps> = ({
                     Sign In
                   </Button>
                 </Link>
-                <Link href="/register">
+                <Link href="/auth/signup">
                   <Button className="bg-job-primary hover:bg-blue-700 text-white">
                     Sign Up
                   </Button>
