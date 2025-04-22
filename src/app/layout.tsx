@@ -10,6 +10,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react"; // Import React for QueryClient state
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 // Assuming Inter is the desired font, adjust if your project used a different one.
 const inter = Inter({ subsets: ["latin"] });
@@ -36,12 +37,17 @@ export default function RootLayout({
       <head>
         {/* Add custom font links or other head elements here if needed */}
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.className} min-h-screen flex flex-col`}>
         <QueryClientProvider client={queryClient}>
           <ThemeProvider>
             <TooltipProvider>
-              <Navbar />
-              {children}
+              <div className="flex flex-col min-h-screen">
+                <Navbar />
+                <div className="flex-1 flex flex-col">
+                  {children}
+                </div>
+                <Footer />
+              </div>
               <Toaster />
               <Sonner />
             </TooltipProvider>
