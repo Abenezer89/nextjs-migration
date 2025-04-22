@@ -1,3 +1,6 @@
+'use client';
+
+import Link from 'next/link';
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Search } from 'lucide-react'
@@ -69,9 +72,11 @@ export default function CompaniesPage() {
                 
                 <p className="text-gray-600 mb-4">{company.jobs} open positions</p>
                 
-                <Button variant="outline" className="w-full border-gray-300 hover:border-job-primary hover:bg-white hover:text-job-primary">
-                  View Jobs
-                </Button>
+                <Link href={`/companies/${company.name}`}>
+                  <Button variant="outline" className="w-full border-gray-300 hover:border-job-primary hover:bg-white hover:text-job-primary">
+                    View Company
+                  </Button>
+                </Link>
               </div>
             ))}
           </div>
