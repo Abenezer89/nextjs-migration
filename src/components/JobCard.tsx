@@ -19,7 +19,7 @@ interface JobCardProps {
 
 const JobCard: React.FC<JobCardProps> = ({ job, compact = false }) => {
   return (
-    <Card className={`bg-white rounded-lg shadow-sm border border-gray-200 hover:border-job-primary/30 overflow-hidden group transition-all duration-300 hover:shadow-md ${compact ? 'p-0' : 'p-6'}`}>
+    <Card className={`bg-job-card rounded-lg shadow-sm border border-gray-200 hover:border-job-primary/30 overflow-hidden group transition-all duration-300 hover:shadow-md ${compact ? 'p-0' : 'p-6'}`}>
       <div className="flex justify-between items-start">
         <CardHeader className={compact ? 'p-4 pb-2' : 'p-0 space-y-3'}>
           <div className="flex items-center gap-2">
@@ -38,7 +38,7 @@ const JobCard: React.FC<JobCardProps> = ({ job, compact = false }) => {
           <div className="text-job-muted text-left">{job.company}</div>
         </CardHeader>
         
-        <Button variant="ghost" className="rounded-full p-2 h-9 w-9 mt-3 mr-3">
+        <Button variant="ghost" className="rounded-full p-2 h-9 w-9 mt-3 mr-3 text-job-text hover:text-job-primary">
           <MoreVertical size={18} />
         </Button>
       </div>
@@ -61,7 +61,7 @@ const JobCard: React.FC<JobCardProps> = ({ job, compact = false }) => {
       
       {!compact && (
         <CardFooter className="p-0 pt-4 gap-3 flex justify-between items-center">
-          <Badge variant="outline" className="rounded-full border-gray-300">
+          <Badge variant="outline" className="rounded-full border-gray-300 text-job-text">
             {job.jobType}
           </Badge>
           

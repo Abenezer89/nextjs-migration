@@ -57,7 +57,7 @@
 
 @layer components {
   .job-card {
-    @apply bg-white rounded-lg shadow-sm border border-gray-200 p-6 transition-all duration-300 hover:shadow-md;
+    @apply bg-job-card rounded-lg shadow-sm border border-gray-200 p-6 transition-all duration-300 hover:shadow-md;
   }
 
   .job-card:hover {
@@ -65,15 +65,15 @@
   }
 
   .filter-btn {
-    @apply bg-white border border-gray-300 rounded-full px-4 py-2 text-sm text-gray-700 flex items-center gap-2 hover:border-gray-400 transition-all;
+    @apply bg-job-card border border-gray-300 rounded-full px-4 py-2 text-sm text-job-text flex items-center gap-2 hover:border-gray-400 transition-all;
   }
 
   .filter-btn.active {
-    @apply bg-blue-50 border-blue-300 text-blue-700;
+    @apply bg-blue-50 border-blue-300 text-job-primary;
   }
 
   .search-input {
-    @apply bg-white rounded-lg border border-gray-300 px-4 py-3 text-gray-700 w-full focus:outline-none focus:ring-2 focus:ring-job-primary focus:border-transparent transition-all duration-200;
+    @apply bg-job-card rounded-lg border border-gray-300 px-4 py-3 text-job-text w-full focus:outline-none focus:ring-2 focus:ring-job-primary focus:border-transparent transition-all duration-200;
   }
 
   .logo-pulse {

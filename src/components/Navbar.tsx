@@ -126,7 +126,7 @@ const Navbar: React.FC<NavbarProps> = ({
   );
 
   return (
-    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <nav className="bg-job-card border-b border-gray-200 sticky top-0 z-50">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-8">
@@ -144,19 +144,19 @@ const Navbar: React.FC<NavbarProps> = ({
             {!isLoggedIn ? (
               <>
                 <Link href="/login">
-                  <Button variant="ghost" className="text-job-text">
+                  <Button variant="ghost" className="text-job-text hover:text-job-primary">
                     Sign In
                   </Button>
                 </Link>
                 <Link href="/register">
-                  <Button className="bg-job-primary hover:bg-blue-700">
+                  <Button className="bg-job-primary hover:bg-blue-700 text-white">
                     Sign Up
                   </Button>
                 </Link>
               </>
             ) : (
               <div className="flex items-center space-x-4">
-                <Button variant="ghost" size="icon" className="relative">
+                <Button variant="ghost" size="icon" className="relative text-job-text hover:text-job-primary">
                   <Bell className="h-5 w-5" />
                   <span className="absolute -top-1 -right-1 h-4 w-4 bg-red-500 rounded-full text-xs text-white flex items-center justify-center">
                     3
@@ -165,35 +165,35 @@ const Navbar: React.FC<NavbarProps> = ({
                 
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon">
+                    <Button variant="ghost" size="icon" className="text-job-text hover:text-job-primary">
                       <UserCircle className="h-5 w-5" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-56">
-                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
+                  <DropdownMenuContent align="end" className="w-56 bg-job-card border border-gray-200">
+                    <DropdownMenuLabel className="text-job-text">My Account</DropdownMenuLabel>
+                    <DropdownMenuSeparator className="bg-gray-200" />
                     <DropdownMenuGroup>
-                      <DropdownMenuItem>
+                      <DropdownMenuItem className="text-job-text hover:bg-gray-100">
                         <Link href="/profile" className="flex items-center w-full">
                           <UserCircle className="mr-2 h-4 w-4" />
                           <span>Profile</span>
                         </Link>
                       </DropdownMenuItem>
-                      <DropdownMenuItem>
+                      <DropdownMenuItem className="text-job-text hover:bg-gray-100">
                         <Link href="/settings" className="flex items-center w-full">
                           <Settings className="mr-2 h-4 w-4" />
                           <span>Settings</span>
                         </Link>
                       </DropdownMenuItem>
-                      <DropdownMenuItem>
+                      <DropdownMenuItem className="text-job-text hover:bg-gray-100">
                         <Link href="/help" className="flex items-center w-full">
                           <HelpCircle className="mr-2 h-4 w-4" />
                           <span>Help</span>
                         </Link>
                       </DropdownMenuItem>
                     </DropdownMenuGroup>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>
+                    <DropdownMenuSeparator className="bg-gray-200" />
+                    <DropdownMenuItem className="text-job-text hover:bg-gray-100">
                       <LogOut className="mr-2 h-4 w-4" />
                       <span>Log out</span>
                     </DropdownMenuItem>
