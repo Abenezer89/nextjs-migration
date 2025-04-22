@@ -14,7 +14,6 @@ import SavedJobs from "./pages/SavedJobs";
 import SearchResults from "./pages/SearchResults";
 import JobApplication from "./pages/JobApplication";
 import JobAlerts from "./pages/JobAlerts";
-import NotFound from "./pages/NotFound";
 
 // Auth pages
 import Login from "./pages/auth/Login";
@@ -77,9 +76,6 @@ const App = () => (
             <Route path="/employer/edit-company-profile" element={<EditCompanyProfile />} />
             <Route path="/employer/pricing" element={<JobPostingPricing />} />
             <Route path="/employer/settings" element={<EmployerSettings />} />
-            
-            {/* 404 Route */}
-            <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
