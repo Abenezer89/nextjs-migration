@@ -21,15 +21,15 @@ export const theme = {
     input: 'hsl(var(--input))',
     ring: 'hsl(var(--ring))',
     
-    // Job-specific colors from Vite's tailwind config
+    // Job-specific colors
     job: {
-      primary: '#2557a7',
-      secondary: '#f3f2f1',
-      accent: '#f97316',
-      background: '#ffffff',
-      card: '#ffffff',
-      text: '#2d2d2d',
-      muted: '#767676'
+      primary: 'hsl(var(--job-primary))',
+      secondary: 'hsl(var(--job-secondary))',
+      accent: 'hsl(var(--job-accent))',
+      background: 'hsl(var(--job-background))',
+      card: 'hsl(var(--job-card))',
+      text: 'hsl(var(--job-text))',
+      muted: 'hsl(var(--job-muted))'
     }
   },
   borderRadius: {

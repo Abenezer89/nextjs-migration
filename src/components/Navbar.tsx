@@ -143,7 +143,7 @@ const Navbar: React.FC<NavbarProps> = ({
             
             {!isLoggedIn ? (
               <>
-                <Link href="/login">
+                <Link href="/auth/login">
                   <Button variant="ghost" className="text-job-text hover:text-job-primary">
                     Sign In
                   </Button>

@@ -14,7 +14,12 @@ import Footer from "@/components/Footer";
 import { AuthProvider } from "@/context/AuthContext";
 
 // Assuming Inter is the desired font, adjust if your project used a different one.
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ 
+  subsets: ["latin"],
+  display: 'swap',
+  preload: true,
+  fallback: ['system-ui', 'Arial', 'sans-serif']
+});
 
 // Basic metadata setup - uncomment and modify as needed
 // export const metadata: Metadata = {
