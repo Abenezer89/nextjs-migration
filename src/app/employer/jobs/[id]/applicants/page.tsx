@@ -1,8 +1,9 @@
+'use client';
 
-import React, { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import React, { useState, useEffect } from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import { Toaster, toast } from 'sonner';
+import { ArrowLeft } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -43,10 +44,8 @@ import {
   ThumbsUp,
   ThumbsDown,
   CornerDownRight,
-  ArrowLeft,
   MapPin
 } from 'lucide-react';
-import { toast } from "@/components/ui/use-toast";
 
 interface Applicant {
   id: string;
@@ -64,127 +63,105 @@ interface Applicant {
   starred?: boolean;
 }
 
-const ViewApplicants: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
-  const jobTitle = "Senior Software Engineer"; // This would normally be fetched
+export default function ApplicantsPage() {
+  const params = useParams();
+  const router = useRouter();
+  const id = params?.id as string;
   
-  // Mock applicants data
-  const [applicants, setApplicants] = useState<Applicant[]>([
-    {
-      id: "1",
-      name: "Alexander Johnson",
-      email: "alex.johnson@example.com",
-      phone: "+1 (555) 123-4567",
-      location: "San Francisco, CA",
-      appliedDate: "2023-05-15T14:30:00",
-      resumeUrl: "/resumes/alexander-johnson.pdf",
-      status: 'interview',
-      match: 92,
-      experience: "7 years",
-      education: "M.S. Computer Science, Stanford University",
-      notes: "Strong technical skills, great communication during screening call.",
-      starred: true
-    },
-    {
-      id: "2",
-      name: "Sophia Chen",
-      email: "sophia.chen@example.com",
-      phone: "+1 (555) 987-6543",
-      location: "Seattle, WA",
-      appliedDate: "2023-05-14T09:15:00",
-      resumeUrl: "/resumes/sophia-chen.pdf",
-      status: 'reviewed',
-      match: 87,
-      experience: "5 years",
-      education: "B.S. Software Engineering, University of Washington"
-    },
-    {
-      id: "3",
-      name: "Michael Williams",
-      email: "michael.w@example.com",
-      phone: "+1 (555) 456-7890",
-      location: "Austin, TX",
-      appliedDate: "2023-05-13T11:45:00",
-      resumeUrl: "/resumes/michael-williams.pdf",
-      status: 'new',
-      match: 78,
-      experience: "4 years",
-      education: "B.S. Computer Science, UT Austin"
-    },
-    {
-      id: "4",
-      name: "Emily Rodriguez",
-      email: "emily.r@example.com",
-      phone: "+1 (555) 234-5678",
-      location: "New York, NY",
-      appliedDate: "2023-05-12T16:20:00",
-      resumeUrl: "/resumes/emily-rodriguez.pdf",
-      status: 'rejected',
-      match: 65,
-      experience: "3 years",
-      education: "B.A. Information Technology, NYU"
-    },
-    {
-      id: "5",
-      name: "David Kim",
-      email: "david.kim@example.com",
-      phone: "+1 (555) 876-5432",
-      location: "Chicago, IL",
-      appliedDate: "2023-05-12T10:05:00",
-      resumeUrl: "/resumes/david-kim.pdf",
-      status: 'offer',
-      match: 95,
-      experience: "8 years",
-      education: "Ph.D. Computer Science, University of Chicago",
-      notes: "Excellent technical skills, great cultural fit, very experienced with our tech stack.",
-      starred: true
-    }
-  ]);
-  
+  // State management
+  const [applicants, setApplicants] = useState<Applicant[]>([]);
   const [selectedApplicant, setSelectedApplicant] = useState<Applicant | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [sortField, setSortField] = useState<string>('appliedDate');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
   
-  // Handle sorting
-  const sortedApplicants = [...applicants].sort((a, b) => {
-    if (sortField === 'name') {
-      return sortDirection === 'asc' 
-        ? a.name.localeCompare(b.name) 
-        : b.name.localeCompare(a.name);
-    }
-    
-    if (sortField === 'appliedDate') {
-      return sortDirection === 'asc'
-        ? new Date(a.appliedDate).getTime() - new Date(b.appliedDate).getTime()
-        : new Date(b.appliedDate).getTime() - new Date(a.appliedDate).getTime();
-    }
-    
-    if (sortField === 'match') {
-      return sortDirection === 'asc' 
-        ? a.match - b.match 
-        : b.match - a.match;
-    }
-    
-    return 0;
-  });
-  
-  // Handle filtering
-  const filteredApplicants = sortedApplicants.filter(applicant => {
-    // Search filter
-    const matchesSearch = searchTerm === '' || 
-      applicant.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      applicant.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      applicant.location.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    // Status filter
-    const matchesStatus = statusFilter === 'all' || applicant.status === statusFilter;
-    
-    return matchesSearch && matchesStatus;
-  });
-  
-  // Change applicant status
+  // Initialize mock data
+  useEffect(() => {
+    const mockApplicants: Applicant[] = [
+      {
+        id: "1",
+        name: "Alexander Johnson",
+        email: "alex.johnson@example.com",
+        phone: "+1 (555) 123-4567",
+        location: "San Francisco, CA",
+        appliedDate: "2023-05-15T14:30:00",
+        resumeUrl: "/resumes/alexander-johnson.pdf",
+        status: 'interview',
+        match: 92,
+        experience: "7 years",
+        education: "M.S. Computer Science, Stanford University",
+        notes: "Strong technical skills, great communication during screening call.",
+        starred: true
+      },
+      {
+        id: "2",
+        name: "Sophia Chen",
+        email: "sophia.chen@example.com",
+        phone: "+1 (555) 987-6543",
+        location: "Seattle, WA",
+        appliedDate: "2023-05-14T09:15:00",
+        resumeUrl: "/resumes/sophia-chen.pdf",
+        status: 'reviewed',
+        match: 87,
+        experience: "5 years",
+        education: "B.S. Software Engineering, University of Washington"
+      },
+      {
+        id: "3",
+        name: "Michael Williams",
+        email: "michael.w@example.com",
+        phone: "+1 (555) 456-7890",
+        location: "Austin, TX",
+        appliedDate: "2023-05-13T11:45:00",
+        resumeUrl: "/resumes/michael-williams.pdf",
+        status: 'new',
+        match: 78,
+        experience: "4 years",
+        education: "B.S. Computer Science, UT Austin"
+      },
+      {
+        id: "4",
+        name: "Emily Rodriguez",
+        email: "emily.r@example.com",
+        phone: "+1 (555) 234-5678",
+        location: "New York, NY",
+        appliedDate: "2023-05-12T16:20:00",
+        resumeUrl: "/resumes/emily-rodriguez.pdf",
+        status: 'rejected',
+        match: 65,
+        experience: "3 years",
+        education: "B.A. Information Technology, NYU"
+      },
+      {
+        id: "5",
+        name: "David Kim",
+        email: "david.kim@example.com",
+        phone: "+1 (555) 876-5432",
+        location: "Chicago, IL",
+        appliedDate: "2023-05-12T10:05:00",
+        resumeUrl: "/resumes/david-kim.pdf",
+        status: 'offer',
+        match: 95,
+        experience: "8 years",
+        education: "Ph.D. Computer Science, University of Chicago",
+        notes: "Excellent technical skills, great cultural fit, very experienced with our tech stack.",
+        starred: true
+      }
+    ];
+    setApplicants(mockApplicants);
+  }, []);
+
+  // Handle navigation
+  const handleBack = () => {
+    router.push('/employer');
+  };
+
+  const handleViewJob = () => {
+    router.push(`/employer/jobs/${id}`);
+  };
+
+  // Handle applicant status update
   const updateApplicantStatus = (applicantId: string, newStatus: Applicant['status']) => {
     setApplicants(applicants.map(app => 
       app.id === applicantId ? {...app, status: newStatus} : app
@@ -202,54 +179,7 @@ const ViewApplicants: React.FC = () => {
       'rejected': "Applicant rejected"
     };
     
-    toast({
-      description: statusMessages[newStatus]
-    });
-  };
-  
-  // Toggle star
-  const toggleStar = (applicantId: string) => {
-    setApplicants(applicants.map(app => 
-      app.id === applicantId ? {...app, starred: !app.starred} : app
-    ));
-    
-    if (selectedApplicant && selectedApplicant.id === applicantId) {
-      setSelectedApplicant({...selectedApplicant, starred: !selectedApplicant.starred});
-    }
-  };
-  
-  // Save notes
-  const saveNotes = (applicantId: string, notes: string) => {
-    setApplicants(applicants.map(app => 
-      app.id === applicantId ? {...app, notes} : app
-    ));
-    
-    toast({
-      description: "Notes saved successfully"
-    });
-  };
-  
-  // Format date
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'short', 
-      day: 'numeric' 
-    });
-  };
-  
-  // Call applicant
-  const callApplicant = (phone: string) => {
-    window.location.href = `tel:${phone}`;
-    toast({
-      description: "Initiating phone call..."
-    });
-  };
-  
-  // Email applicant
-  const emailApplicant = (email: string) => {
-    window.location.href = `mailto:${email}`;
+    toast(statusMessages[newStatus]);
   };
 
   // Helper for status badge
@@ -272,28 +202,30 @@ const ViewApplicants: React.FC = () => {
   
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
-      
       <main className="flex-grow bg-gray-50 py-8">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
             <div>
-              <Link to="/employer" className="text-job-primary hover:underline mb-2 inline-block">
+              <button 
+                onClick={handleBack}
+                className="text-job-primary hover:underline mb-2 inline-block"
+              >
                 <ArrowLeft className="h-4 w-4 inline mr-1" />
                 Back to Dashboard
-              </Link>
+              </button>
               <h1 className="text-2xl font-bold text-job-text">
-                Applicants for {jobTitle}
+                Applicants for Senior Software Engineer
               </h1>
               <p className="text-job-muted">Manage and review job applicants</p>
             </div>
             
             <div className="mt-4 md:mt-0 flex gap-2">
-              <Link to={`/employer/jobs/${id}`}>
-                <Button variant="outline" className="border-gray-300">
-                  View Job Posting
-                </Button>
-              </Link>
+              <button 
+                onClick={handleViewJob}
+                className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50"
+              >
+                View Job Posting
+              </button>
             </div>
           </div>
           
@@ -433,14 +365,14 @@ const ViewApplicants: React.FC = () => {
               <div className="bg-white rounded-lg border border-gray-200">
                 <div className="p-4 border-b border-gray-200">
                   <div className="flex justify-between items-center">
-                    <h3 className="font-medium">Applicants ({filteredApplicants.length})</h3>
+                    <h3 className="font-medium">Applicants ({applicants.length})</h3>
                     <ArrowUpDown className="h-4 w-4 text-gray-500" />
                   </div>
                 </div>
                 
                 <div className="divide-y divide-gray-200 max-h-[600px] overflow-y-auto">
-                  {filteredApplicants.length > 0 ? (
-                    filteredApplicants.map((applicant) => (
+                  {applicants.length > 0 ? (
+                    applicants.map((applicant) => (
                       <div 
                         key={applicant.id}
                         className={`p-4 hover:bg-gray-50 cursor-pointer transition-colors ${selectedApplicant?.id === applicant.id ? 'bg-blue-50' : ''}`}
@@ -451,7 +383,7 @@ const ViewApplicants: React.FC = () => {
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
-                              toggleStar(applicant.id);
+                              // Toggle star functionality will be implemented
                             }}
                             className="text-gray-400 hover:text-yellow-400 transition-colors"
                           >
@@ -467,7 +399,7 @@ const ViewApplicants: React.FC = () => {
                         <div className="flex justify-between items-center">
                           <div className="flex items-center">
                             <Calendar className="h-3 w-3 mr-1 text-gray-400" />
-                            <span className="text-xs text-gray-500">{formatDate(applicant.appliedDate)}</span>
+                            <span className="text-xs text-gray-500">{new Date(applicant.appliedDate).toLocaleDateString()}</span>
                           </div>
                           <div>{getStatusBadge(applicant.status)}</div>
                         </div>
@@ -491,7 +423,9 @@ const ViewApplicants: React.FC = () => {
                         <div className="flex items-center mb-1">
                           <h2 className="text-xl font-semibold mr-3">{selectedApplicant.name}</h2>
                           <button
-                            onClick={() => toggleStar(selectedApplicant.id)}
+                            onClick={() => {
+                              // Toggle star functionality will be implemented
+                            }}
                             className="text-gray-400 hover:text-yellow-400 transition-colors"
                           >
                             <Star className={`h-5 w-5 ${selectedApplicant.starred ? 'fill-yellow-400 text-yellow-400' : ''}`} />
@@ -526,7 +460,7 @@ const ViewApplicants: React.FC = () => {
                         variant="outline" 
                         size="sm" 
                         className="border-gray-300"
-                        onClick={() => callApplicant(selectedApplicant.phone)}
+                        onClick={() => window.location.href = `tel:${selectedApplicant.phone}`}
                       >
                         <Phone className="mr-1 h-4 w-4" />
                         Call
@@ -536,7 +470,7 @@ const ViewApplicants: React.FC = () => {
                         variant="outline" 
                         size="sm" 
                         className="border-gray-300"
-                        onClick={() => emailApplicant(selectedApplicant.email)}
+                        onClick={() => window.location.href = `mailto:${selectedApplicant.email}`}
                       >
                         <Mail className="mr-1 h-4 w-4" />
                         Email
@@ -585,7 +519,7 @@ const ViewApplicants: React.FC = () => {
                               
                               <div>
                                 <h4 className="text-sm font-medium text-gray-500">Applied On</h4>
-                                <p>{formatDate(selectedApplicant.appliedDate)}</p>
+                                <p>{new Date(selectedApplicant.appliedDate).toLocaleDateString()}</p>
                               </div>
                             </div>
                           </div>
@@ -616,7 +550,7 @@ const ViewApplicants: React.FC = () => {
                             <div className="flex items-center">
                               {getStatusBadge(selectedApplicant.status)}
                               <span className="ml-2 text-sm text-gray-500">
-                                Last updated on {formatDate(selectedApplicant.appliedDate)}
+                                Last updated on {new Date(selectedApplicant.appliedDate).toLocaleDateString()}
                               </span>
                             </div>
                           </div>
@@ -712,7 +646,8 @@ const ViewApplicants: React.FC = () => {
                               className="bg-job-primary hover:bg-blue-700"
                               onClick={() => {
                                 if (selectedApplicant) {
-                                  saveNotes(selectedApplicant.id, selectedApplicant.notes || '');
+                                  // Save notes functionality will be implemented
+                                  toast("Notes saved successfully");
                                 }
                               }}
                             >
@@ -737,10 +672,6 @@ const ViewApplicants: React.FC = () => {
           </div>
         </div>
       </main>
-      
-      <Footer />
     </div>
   );
-};
-
-export default ViewApplicants;
+} 
