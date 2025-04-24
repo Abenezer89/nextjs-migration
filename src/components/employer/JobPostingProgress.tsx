@@ -175,7 +175,7 @@ const JobPostingProgress: React.FC<JobPostingProgressProps> = ({
         {currentStep === totalSteps && (
           <Button
             className="bg-green-600 hover:bg-green-700"
-            onClick={() => router.push('/employer/jobs/success')}
+            onClick={() => router.push('/employer/post-job/success')}
           >
             Post Job
             <CheckCircle className="ml-2 w-4 h-4" />
