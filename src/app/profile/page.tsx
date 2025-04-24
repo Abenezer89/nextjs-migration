@@ -1,94 +1,40 @@
+'use client';
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { User, Briefcase, GraduationCap, Award, Edit, Plus, Check, BookOpen, MapPin, Mail, Phone, Globe, AlertCircle, ChevronDown } from 'lucide-react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import JobCard from '@/components/JobCard';
-import { jobs } from '@/data/jobs';
 import { toast } from "@/components/ui/use-toast";
+import { profileData } from '@/data/profile';
 
-const Profile: React.FC = () => {
+// Mock data - will be moved to a separate file later
+const featuredJobs = [
+  {
+    id: '1',
+    title: 'Senior Frontend Developer',
+    company: 'TechCorp',
+    location: 'San Francisco, CA',
+    remote: true,
+    postedDate: '2 days ago',
+    isFeatured: true
+  },
+  {
+    id: '2',
+    title: 'React Developer',
+    company: 'WebSolutions',
+    location: 'Remote',
+    remote: true,
+    postedDate: '1 week ago',
+    isFeatured: true
+  }
+];
+
+export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
   
-  const featuredJobs = jobs.filter(job => job.isFeatured).slice(0, 2);
-  const savedJobs = jobs.slice(2, 5); // Mocking saved jobs for now
-  
-  const profileData = {
-    name: 'Alex Johnson',
-    title: 'Senior Software Engineer',
-    location: 'San Francisco, CA',
-    email: 'alex@example.com',
-    phone: '(555) 123-4567',
-    website: 'https://alexjohnson.dev',
-    about: 'Passionate software engineer with 8+ years of experience specializing in front-end development. Proven track record of building scalable web applications and leading engineering teams.',
-    skills: [
-      'React', 'TypeScript', 'JavaScript', 'Node.js', 'GraphQL', 'CSS/SASS', 
-      'Redux', 'RESTful APIs', 'Git', 'CI/CD', 'Agile/Scrum', 'Jest'
-    ],
-    experience: [
-      {
-        title: 'Senior Software Engineer',
-        company: 'TechCorp',
-        location: 'San Francisco, CA',
-        from: 'Jan 2020',
-        to: 'Present',
-        description: 'Lead front-end development for the company\'s flagship product. Managed a team of 5 engineers. Reduced load times by 40% through code optimization.'
-      },
-      {
-        title: 'Software Engineer',
-        company: 'WebSolutions',
-        location: 'San Francisco, CA',
-        from: 'Mar 2017',
-        to: 'Dec 2019',
-        description: 'Developed and maintained client-facing applications using React and Node.js. Collaborated with design team to implement UI/UX improvements.'
-      },
-      {
-        title: 'Junior Developer',
-        company: 'StartupXYZ',
-        location: 'Portland, OR',
-        from: 'Jun 2015',
-        to: 'Feb 2017',
-        description: 'Contributed to the development of web applications using JavaScript and jQuery. Participated in code reviews and agile development practices.'
-      }
-    ],
-    education: [
-      {
-        degree: 'M.S. Computer Science',
-        institution: 'Stanford University',
-        location: 'Stanford, CA',
-        from: '2013',
-        to: '2015',
-        description: 'Focus on software engineering and human-computer interaction.'
-      },
-      {
-        degree: 'B.S. Computer Science',
-        institution: 'University of Oregon',
-        location: 'Eugene, OR',
-        from: '2009',
-        to: '2013',
-        description: 'Graduated with honors. Minor in Mathematics.'
-      }
-    ],
-    certifications: [
-      {
-        name: 'AWS Certified Developer',
-        issuer: 'Amazon Web Services',
-        date: 'Oct 2021',
-        expires: 'Oct 2024'
-      },
-      {
-        name: 'Professional Scrum Master I',
-        issuer: 'Scrum.org',
-        date: 'Mar 2019'
-      }
-    ]
-  };
-
   const handleEditToggle = () => {
     setIsEditing(!isEditing);
     if (isEditing) {
@@ -108,8 +54,6 @@ const Profile: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
-      
       <main className="flex-grow bg-gray-50 py-6 md:py-10">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-6">
@@ -426,7 +370,7 @@ const Profile: React.FC = () => {
                   {featuredJobs.map(job => (
                     <Link 
                       key={job.id} 
-                      to={`/job/${job.id}`}
+                      href={`/jobs/${job.id}`}
                       className="block p-3 border border-gray-200 rounded-lg hover:border-job-primary hover:shadow-sm transition-all"
                     >
                       <div className="font-medium text-job-primary hover:underline">{job.title}</div>
@@ -442,7 +386,7 @@ const Profile: React.FC = () => {
                 </div>
                 
                 <div className="mt-4 text-center">
-                  <Link to="/">
+                  <Link href="/jobs">
                     <Button variant="ghost" className="text-job-primary hover:bg-blue-50">
                       View All Recommendations
                       <ChevronDown size={16} className="ml-1" />
@@ -454,10 +398,6 @@ const Profile: React.FC = () => {
           </div>
         </div>
       </main>
-      
-      <Footer />
     </div>
   );
-};
-
-export default Profile;
+} 
