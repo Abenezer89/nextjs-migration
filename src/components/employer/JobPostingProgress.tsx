@@ -1,6 +1,7 @@
+'use client';
 
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { 
   FileText, 
   Briefcase, 
@@ -22,7 +23,7 @@ const JobPostingProgress: React.FC<JobPostingProgressProps> = ({
   totalSteps = 5, 
   jobId 
 }) => {
-  const navigate = useNavigate();
+  const router = useRouter();
   
   const steps = [
     { 
@@ -65,7 +66,7 @@ const JobPostingProgress: React.FC<JobPostingProgressProps> = ({
   const handleNavigate = (path: string, stepNumber: number) => {
     // Only allow navigation to completed steps or the current step
     if (stepNumber <= currentStep) {
-      navigate(path);
+      router.push(path);
     }
   };
   
@@ -147,9 +148,9 @@ const JobPostingProgress: React.FC<JobPostingProgressProps> = ({
           onClick={() => {
             if (currentStep > 1) {
               const prevStep = steps[currentStep - 2];
-              navigate(prevStep.path);
+              router.push(prevStep.path);
             } else {
-              navigate('/employer');
+              router.push('/employer');
             }
           }}
           className="border-gray-300"
@@ -162,7 +163,7 @@ const JobPostingProgress: React.FC<JobPostingProgressProps> = ({
           <Button
             onClick={() => {
               const nextStep = steps[currentStep];
-              navigate(nextStep.path);
+              router.push(nextStep.path);
             }}
             className="bg-job-primary hover:bg-blue-700"
           >
@@ -174,7 +175,7 @@ const JobPostingProgress: React.FC<JobPostingProgressProps> = ({
         {currentStep === totalSteps && (
           <Button
             className="bg-green-600 hover:bg-green-700"
-            onClick={() => navigate('/employer/jobs/success')}
+            onClick={() => router.push('/employer/jobs/success')}
           >
             Post Job
             <CheckCircle className="ml-2 w-4 h-4" />
