@@ -1,10 +1,8 @@
+'use client';
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { BookmarkCheck, Search, Filter, Trash2, Calendar, Briefcase, Clock } from 'lucide-react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import JobCard from '@/components/JobCard';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
@@ -12,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { jobs } from '@/data/jobs';
 import { toast } from "@/components/ui/use-toast";
 
-const SavedJobs: React.FC = () => {
+const SavedJobsPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   // For demo purposes, we'll use some of the mock jobs as saved jobs
   const savedJobs = jobs.slice(0, 5);
@@ -40,8 +38,6 @@ const SavedJobs: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
-      
       <main className="flex-grow container mx-auto px-4 py-6 md:py-10">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
           <div className="mb-4 md:mb-0">
@@ -49,7 +45,7 @@ const SavedJobs: React.FC = () => {
             <p className="text-job-muted">Track and manage your job applications</p>
           </div>
           
-          <Link to="/profile">
+          <Link href="/job-seeker/profile">
             <Button className="bg-job-primary hover:bg-blue-700">
               View Profile
             </Button>
@@ -104,7 +100,7 @@ const SavedJobs: React.FC = () => {
                   <div key={job.id} className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-sm transition-all">
                     <div className="flex flex-col md:flex-row gap-4">
                       <div className="flex-1">
-                        <Link to={`/job/${job.id}`} className="text-xl font-semibold text-job-text hover:text-job-primary transition-colors">
+                        <Link href={`/job/${job.id}`} className="text-xl font-semibold text-job-text hover:text-job-primary transition-colors">
                           {job.title}
                         </Link>
                         <div className="text-job-muted mt-1">{job.company}</div>
@@ -117,7 +113,7 @@ const SavedJobs: React.FC = () => {
                       </div>
                       
                       <div className="flex flex-row md:flex-col gap-2 justify-end">
-                        <Link to={`/apply/${job.id}`}>
+                        <Link href={`/apply/${job.id}`}>
                           <Button className="w-full bg-job-primary hover:bg-blue-700">
                             Apply Now
                           </Button>
@@ -167,7 +163,7 @@ const SavedJobs: React.FC = () => {
                 <p className="text-gray-600 mb-6">
                   Start saving jobs you're interested in to keep track of them here.
                 </p>
-                <Link to="/">
+                <Link href="/">
                   <Button className="bg-job-primary hover:bg-blue-700">
                     Browse Jobs
                   </Button>
@@ -206,7 +202,7 @@ const SavedJobs: React.FC = () => {
                   <div key={job.id} className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-sm transition-all">
                     <div className="flex flex-col md:flex-row gap-4">
                       <div className="flex-1">
-                        <Link to={`/job/${job.id}`} className="text-xl font-semibold text-job-text hover:text-job-primary transition-colors">
+                        <Link href={`/job/${job.id}`} className="text-xl font-semibold text-job-text hover:text-job-primary transition-colors">
                           {job.title}
                         </Link>
                         <div className="text-job-muted mt-1">{job.company}</div>
@@ -236,7 +232,7 @@ const SavedJobs: React.FC = () => {
                 <p className="text-gray-600 mb-6">
                   When you apply for jobs, they'll appear here so you can track your applications.
                 </p>
-                <Link to="/">
+                <Link href="/">
                   <Button className="bg-job-primary hover:bg-blue-700">
                     Browse Jobs
                   </Button>
@@ -275,7 +271,7 @@ const SavedJobs: React.FC = () => {
                   <div key={job.id} className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-sm transition-all">
                     <div className="flex flex-col md:flex-row gap-4">
                       <div className="flex-1">
-                        <Link to={`/job/${job.id}`} className="text-xl font-semibold text-job-text hover:text-job-primary transition-colors">
+                        <Link href={`/job/${job.id}`} className="text-xl font-semibold text-job-text hover:text-job-primary transition-colors">
                           {job.title}
                         </Link>
                         <div className="text-job-muted mt-1">{job.company}</div>
@@ -313,7 +309,7 @@ const SavedJobs: React.FC = () => {
                 <p className="text-gray-600 mb-6">
                   Jobs you archive will appear here. Archive jobs that you're no longer interested in but want to keep for reference.
                 </p>
-                <Link to="/">
+                <Link href="/">
                   <Button className="bg-job-primary hover:bg-blue-700">
                     Browse Jobs
                   </Button>
@@ -330,12 +326,12 @@ const SavedJobs: React.FC = () => {
             Set up job alerts to get notified about new positions that match your criteria.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link to="/">
+            <Link href="/">
               <Button className="w-full sm:w-auto bg-job-primary hover:bg-blue-700">
                 Browse Jobs
               </Button>
             </Link>
-            <Link to="/profile">
+            <Link href="/job-seeker/profile">
               <Button variant="outline" className="w-full sm:w-auto border-gray-300 hover:border-job-primary hover:bg-white hover:text-job-primary">
                 Set Up Job Alerts
               </Button>
@@ -343,10 +339,8 @@ const SavedJobs: React.FC = () => {
           </div>
         </div>
       </main>
-      
-      <Footer />
     </div>
   );
 };
 
-export default SavedJobs;
+export default SavedJobsPage; 
