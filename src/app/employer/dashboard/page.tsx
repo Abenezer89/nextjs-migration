@@ -1,10 +1,9 @@
+'use client';
 
 import React from 'react';
-import { Link } from 'react-router-dom';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import Link from 'next/link';
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   Briefcase, 
@@ -44,8 +43,6 @@ const EmployerDashboard: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
-      
       <main className="flex-grow bg-gray-50 py-8">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
@@ -55,7 +52,7 @@ const EmployerDashboard: React.FC = () => {
             </div>
             
             <div className="mt-4 md:mt-0">
-              <Link to="/employer/post-job/details">
+              <Link href="/employer/post-job/details">
                 <Button className="bg-job-primary hover:bg-blue-700">
                   <PlusCircle size={16} className="mr-2" />
                   Post a New Job
@@ -64,7 +61,8 @@ const EmployerDashboard: React.FC = () => {
             </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          {/* Statistics Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
             <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-lg font-medium">Active Jobs</CardTitle>
@@ -96,6 +94,7 @@ const EmployerDashboard: React.FC = () => {
             </Card>
           </div>
           
+          {/* Job Postings Section */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
               <Card className="mb-8">
@@ -121,7 +120,7 @@ const EmployerDashboard: React.FC = () => {
                         <div key={job.id} className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-sm transition-all">
                           <div className="flex flex-col md:flex-row justify-between">
                             <div>
-                              <Link to={`/employer/jobs/${job.id}`} className="text-lg font-medium text-job-primary hover:underline">
+                              <Link href={`/employer/jobs/${job.id}`} className="text-lg font-medium text-job-primary hover:underline">
                                 {job.title}
                               </Link>
                               <div className="flex flex-wrap gap-x-4 gap-y-2 mt-2 text-sm text-gray-500">
@@ -140,13 +139,13 @@ const EmployerDashboard: React.FC = () => {
                               </div>
                             </div>
                             
-                            <div className="flex gap-2 mt-3 md:mt-0">
-                              <Link to={`/employer/jobs/${job.id}/applicants`}>
+                            <div className="flex gap-2 mt-4 md:mt-0">
+                              <Link href={`/employer/jobs/${job.id}/applicants`}>
                                 <Button variant="outline" size="sm" className="border-gray-300 hover:border-job-primary hover:bg-white hover:text-job-primary">
                                   View Applicants
                                 </Button>
                               </Link>
-                              <Link to={`/employer/jobs/${job.id}/edit`}>
+                              <Link href={`/employer/jobs/${job.id}/edit`}>
                                 <Button variant="outline" size="sm" className="border-gray-300 hover:border-job-primary hover:bg-white hover:text-job-primary">
                                   Edit
                                 </Button>
@@ -157,7 +156,7 @@ const EmployerDashboard: React.FC = () => {
                       ))}
                       
                       <div className="text-center py-2">
-                        <Link to="/employer/jobs">
+                        <Link href="/employer/jobs">
                           <Button variant="ghost" className="text-job-primary hover:bg-blue-50">
                             View All Jobs
                           </Button>
@@ -170,7 +169,7 @@ const EmployerDashboard: React.FC = () => {
                         <div key={job.id} className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-sm transition-all">
                           <div className="flex flex-col md:flex-row justify-between">
                             <div>
-                              <Link to={`/employer/post-job/continue/${job.id}`} className="text-lg font-medium text-job-primary hover:underline">
+                              <Link href={`/employer/post-job/continue/${job.id}`} className="text-lg font-medium text-job-primary hover:underline">
                                 {job.title}
                               </Link>
                               <div className="flex flex-wrap gap-x-4 gap-y-2 mt-2 text-sm text-gray-500">
@@ -189,23 +188,9 @@ const EmployerDashboard: React.FC = () => {
                                 </div>
                               </div>
                             </div>
-                            
-                            <div className="flex gap-2 mt-3 md:mt-0">
-                              <Link to={`/employer/post-job/continue/${job.id}`}>
-                                <Button variant="outline" size="sm" className="border-gray-300 hover:border-job-primary hover:bg-white hover:text-job-primary">
-                                  Continue Editing
-                                </Button>
-                              </Link>
-                            </div>
                           </div>
                         </div>
                       ))}
-                      
-                      {draftJobs.length === 0 && (
-                        <div className="text-center py-8 text-gray-500">
-                          You don't have any draft jobs.
-                        </div>
-                      )}
                     </TabsContent>
                     
                     <TabsContent value="closed" className="space-y-4">
@@ -213,7 +198,7 @@ const EmployerDashboard: React.FC = () => {
                         <div key={job.id} className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-sm transition-all">
                           <div className="flex flex-col md:flex-row justify-between">
                             <div>
-                              <Link to={`/employer/jobs/${job.id}`} className="text-lg font-medium text-job-primary hover:underline">
+                              <Link href={`/employer/jobs/${job.id}`} className="text-lg font-medium text-job-primary hover:underline">
                                 {job.title}
                               </Link>
                               <div className="flex flex-wrap gap-x-4 gap-y-2 mt-2 text-sm text-gray-500">
@@ -231,34 +216,16 @@ const EmployerDashboard: React.FC = () => {
                                 </div>
                               </div>
                             </div>
-                            
-                            <div className="flex gap-2 mt-3 md:mt-0">
-                              <Link to={`/employer/jobs/${job.id}/applicants`}>
-                                <Button variant="outline" size="sm" className="border-gray-300 hover:border-job-primary hover:bg-white hover:text-job-primary">
-                                  View Applicants
-                                </Button>
-                              </Link>
-                              <Link to={`/employer/jobs/${job.id}/repost`}>
-                                <Button variant="outline" size="sm" className="border-gray-300 hover:border-job-primary hover:bg-white hover:text-job-primary">
-                                  Repost
-                                </Button>
-                              </Link>
-                            </div>
                           </div>
                         </div>
                       ))}
-                      
-                      {closedJobs.length === 0 && (
-                        <div className="text-center py-8 text-gray-500">
-                          You don't have any closed jobs.
-                        </div>
-                      )}
                     </TabsContent>
                   </Tabs>
                 </CardContent>
               </Card>
               
-              <Card>
+              {/* Recent Activity */}
+              <Card className="mb-8">
                 <CardHeader>
                   <CardTitle>Recent Activity</CardTitle>
                 </CardHeader>
@@ -272,7 +239,7 @@ const EmployerDashboard: React.FC = () => {
                         <div>
                           <p className="text-gray-800">
                             <span className="font-medium">Jamie Smith</span> applied to{" "}
-                            <Link to="/employer/jobs/2" className="text-job-primary hover:underline">
+                            <Link href="/employer/jobs/2" className="text-job-primary hover:underline">
                               Operations Technical Analyst
                             </Link>
                           </p>
@@ -311,9 +278,8 @@ const EmployerDashboard: React.FC = () => {
                   </div>
                 </CardContent>
               </Card>
-            </div>
-            
-            <div>
+              
+              {/* Recent Applicants */}
               <Card className="mb-8">
                 <CardHeader>
                   <CardTitle>Recent Applicants</CardTitle>
@@ -322,7 +288,7 @@ const EmployerDashboard: React.FC = () => {
                   <div className="space-y-4">
                     {recentApplicants.map(applicant => (
                       <div key={applicant.id} className="p-3 border border-gray-200 rounded-lg hover:shadow-sm transition-all">
-                        <Link to={`/employer/applicants/${applicant.id}`} className="block">
+                        <Link href={`/employer/applicants/${applicant.id}`} className="block">
                           <div className="font-medium text-job-primary hover:underline">{applicant.name}</div>
                           <div className="text-gray-600 text-sm">{applicant.role}</div>
                           <div className="flex justify-between items-center mt-2">
@@ -341,7 +307,7 @@ const EmployerDashboard: React.FC = () => {
                   </div>
                   
                   <div className="text-center mt-4">
-                    <Link to="/employer/applicants">
+                    <Link href="/employer/applicants">
                       <Button variant="ghost" className="text-job-primary hover:bg-blue-50">
                         View All Applicants
                       </Button>
@@ -349,38 +315,41 @@ const EmployerDashboard: React.FC = () => {
                   </div>
                 </CardContent>
               </Card>
-              
+            </div>
+            
+            {/* Employer Tools */}
+            <div>
               <Card>
                 <CardHeader>
                   <CardTitle>Employer Tools</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 gap-3">
-                    <Link to="/employer/post-job/details">
+                    <Link href="/employer/post-job/details">
                       <Button variant="outline" className="w-full justify-start border-gray-300 hover:border-job-primary hover:bg-white hover:text-job-primary">
                         <PlusCircle size={16} className="mr-2" />
                         Post a New Job
                       </Button>
                     </Link>
-                    <Link to="/employer/applicants">
+                    <Link href="/employer/applicants">
                       <Button variant="outline" className="w-full justify-start border-gray-300 hover:border-job-primary hover:bg-white hover:text-job-primary">
                         <FileSearch size={16} className="mr-2" />
                         Browse Resumes
                       </Button>
                     </Link>
-                    <Link to="/employer/company-profile">
+                    <Link href="/employer/company-profile">
                       <Button variant="outline" className="w-full justify-start border-gray-300 hover:border-job-primary hover:bg-white hover:text-job-primary">
                         <Building size={16} className="mr-2" />
                         Edit Company Profile
                       </Button>
                     </Link>
-                    <Link to="/employer/reports">
+                    <Link href="/employer/reports">
                       <Button variant="outline" className="w-full justify-start border-gray-300 hover:border-job-primary hover:bg-white hover:text-job-primary">
                         <BarChart size={16} className="mr-2" />
                         Analytics & Reports
                       </Button>
                     </Link>
-                    <Link to="/pricing">
+                    <Link href="/employer/upgrade">
                       <Button variant="outline" className="w-full justify-start border-gray-300 hover:border-job-primary hover:bg-white hover:text-job-primary">
                         <Award size={16} className="mr-2" />
                         Upgrade Plan
@@ -393,10 +362,8 @@ const EmployerDashboard: React.FC = () => {
           </div>
         </div>
       </main>
-      
-      <Footer />
     </div>
   );
 };
 
-export default EmployerDashboard;
+export default EmployerDashboard; 
