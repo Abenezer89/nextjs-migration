@@ -1,3 +1,4 @@
+'use client';
 
 import React, { useState } from 'react';
 import { 
@@ -416,4 +417,4 @@ const JobSeekerSettings = () => {
   );
 };
 
-export default JobSeekerSettings;
+export default JobSeekerSettings; 
