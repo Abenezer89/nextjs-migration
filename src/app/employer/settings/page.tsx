@@ -1,3 +1,4 @@
+'use client';
 
 import React, { useState } from 'react';
 import { 
@@ -44,7 +45,7 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 
-const EmployerSettings = () => {
+const SettingsPage = () => {
   const { toast } = useToast();
   
   const [accountData, setAccountData] = useState({
@@ -496,4 +497,4 @@ const EmployerSettings = () => {
   );
 };
 
-export default EmployerSettings;
+export default SettingsPage; 
