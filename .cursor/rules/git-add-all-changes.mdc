@@ -1,0 +1,31 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# How to Add All Changes with Git
+
+To stage all new, modified, and deleted files in the repository, use the following command:
+
+```
+git add .
+```
+
+This command should be run from the root of your project or the relevant subdirectory. It will add all tracked and untracked files (except those in .gitignore) to the staging area, preparing them for commit.
+
+**Typical workflow:**
+1. Stage all changes:
+   ```
+   git add .
+   ```
+2. Commit with a descriptive message:
+   ```
+   git commit -m "your message here"
+   ```
+3. Push to your branch:
+   ```
+   git push origin <branch-name>
+   ```
+
+This ensures that all your work is included in the next commit and push.
+
