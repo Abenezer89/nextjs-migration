@@ -1,28 +1,18 @@
+'use client';
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import Link from 'next/link';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
-import { 
-  Card, 
-  CardContent, 
-  CardDescription, 
-  CardFooter, 
-  CardHeader, 
-  CardTitle 
-} from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Bell, Plus, Trash2, Check, MapPin, Briefcase, Calendar, AlertCircle, Edit } from 'lucide-react';
+import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "@/components/ui/use-toast";
+import { Bell, Plus, Trash2, Check, MapPin, Calendar, AlertCircle, Edit } from 'lucide-react';
+import { Label } from "@/components/ui/label";
 
-const JobAlerts: React.FC = () => {
+export default function JobAlertsPage() {
   const [alerts, setAlerts] = useState([
     {
       id: "1",
@@ -63,7 +53,7 @@ const JobAlerts: React.FC = () => {
     location: "",
     frequency: "daily"
   });
-  
+
   const handleCreateAlert = () => {
     if (!newAlert.name || !newAlert.keywords) {
       toast({
@@ -96,14 +86,14 @@ const JobAlerts: React.FC = () => {
       description: "Your new job alert has been created successfully.",
       action: (
         <Button variant="outline" size="sm" className="gap-1" asChild>
-          <Link to="/search">
+          <Link href="/job-seeker/search">
             <Check className="h-4 w-4" /> View Jobs
           </Link>
         </Button>
       )
     });
   };
-  
+
   const toggleAlertStatus = (id: string) => {
     setAlerts(alerts.map(alert => 
       alert.id === id ? {...alert, active: !alert.active} : alert
@@ -132,8 +122,6 @@ const JobAlerts: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
-      
       <main className="flex-grow bg-gray-50 py-8">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
@@ -265,7 +253,7 @@ const JobAlerts: React.FC = () => {
                         
                         <div className="flex items-center mt-4 md:mt-0">
                           {alert.resultsCount > 0 && (
-                            <Link to="/search" className="text-job-primary mr-4 hover:underline">
+                            <Link href="/job-seeker/search" className="text-job-primary mr-4 hover:underline">
                               {alert.resultsCount} new jobs
                             </Link>
                           )}
@@ -347,10 +335,6 @@ const JobAlerts: React.FC = () => {
           </div>
         </div>
       </main>
-      
-      <Footer />
     </div>
   );
-};
-
-export default JobAlerts;
+} 
