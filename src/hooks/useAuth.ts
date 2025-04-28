@@ -1,61 +1,74 @@
-import { trpc } from '@/lib/trpc';
-import { useCallback } from 'react';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { useCallback, useEffect, useState } from 'react';
+import { Session } from '@supabase/supabase-js';
 
 export function useAuth() {
-  const utils = trpc.useContext();
-  const session = trpc.auth.getSession.useQuery();
-  const signIn = trpc.auth.signIn.useMutation({
-    onSuccess: () => {
-      utils.auth.getSession.invalidate();
-    },
-  });
-  const signUp = trpc.auth.signUp.useMutation({
-    onSuccess: () => {
-      utils.auth.getSession.invalidate();
-    },
-  });
-  const signOut = trpc.auth.signOut.useMutation({
-    onSuccess: () => {
-      utils.auth.getSession.invalidate();
-    },
-  });
+  const supabase = createClientComponentClient();
+  const [session, setSession] = useState<Session | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setIsLoading(false);
+    });
+
+    // Listen for auth changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, [supabase]);
 
   const handleSignIn = useCallback(
     async (email: string, password: string) => {
       try {
-        await signIn.mutateAsync({ email, password });
+        const { error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+        if (error) throw error;
         return { success: true, error: null };
       } catch (error) {
         return { success: false, error: error instanceof Error ? error.message : 'An error occurred' };
       }
     },
-    [signIn]
+    [supabase]
   );
 
   const handleSignUp = useCallback(
     async (email: string, password: string) => {
       try {
-        await signUp.mutateAsync({ email, password });
+        const { error } = await supabase.auth.signUp({
+          email,
+          password,
+        });
+        if (error) throw error;
         return { success: true, error: null };
       } catch (error) {
         return { success: false, error: error instanceof Error ? error.message : 'An error occurred' };
       }
     },
-    [signUp]
+    [supabase]
   );
 
   const handleSignOut = useCallback(async () => {
     try {
-      await signOut.mutateAsync();
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
       return { success: true, error: null };
     } catch (error) {
       return { success: false, error: error instanceof Error ? error.message : 'An error occurred' };
     }
-  }, [signOut]);
+  }, [supabase]);
 
   return {
-    session: session.data,
-    isLoading: session.isLoading,
+    session,
+    isLoading,
     signIn: handleSignIn,
     signUp: handleSignUp,
     signOut: handleSignOut,
